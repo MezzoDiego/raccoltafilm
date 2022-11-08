@@ -66,7 +66,7 @@
 											<td>
 												<a class="btn  btn-sm btn-outline-secondary" href="ExecuteVisualizzaRegistaServlet?idRegista=${registaItem.id }">Visualizza</a>
 												<a class="btn  btn-sm btn-outline-primary ml-2 mr-2" href="PrepareUpdateRegistaServlet?idRegista=${registaItem.id }">Edit</a>
-												<a class="btn btn-outline-danger btn-sm" href="laservletperrimuovere">Delete</a>
+												<a class="btn btn-outline-danger btn-sm" href="PrepareDeleteRegistaServlet?idRegista=${registaItem.id }">Delete</a>
 											</td>
 										</tr>
 									</c:forEach>

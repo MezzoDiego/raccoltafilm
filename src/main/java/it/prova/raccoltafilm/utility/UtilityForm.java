@@ -58,6 +58,24 @@ public class UtilityForm {
 		}
 		return result;
 	}
+	
+	public static Film createFilmFromParamsConId(String idFilm, String titoloInputParam, String genereInputParam,
+			String minutiDurataInputParam, String dataPubblicazioneStringParam, String registaIdStringParam) {
+
+		Film result = new Film(titoloInputParam, genereInputParam);
+		if (NumberUtils.isCreatable(idFilm)) {
+			result.setId(Long.parseLong(idFilm));
+		}
+		
+		if (NumberUtils.isCreatable(minutiDurataInputParam)) {
+			result.setMinutiDurata(Integer.parseInt(minutiDurataInputParam));
+		}
+		result.setDataPubblicazione(parseDateArrivoFromString(dataPubblicazioneStringParam));
+		if (NumberUtils.isCreatable(registaIdStringParam)) {
+			result.setRegista(new Regista(Long.parseLong(registaIdStringParam)));
+		}
+		return result;
+	}
 
 	public static boolean validateFilmBean(Film filmToBeValidated) {
 		// prima controlliamo che non siano vuoti i parametri
@@ -68,7 +86,8 @@ public class UtilityForm {
 				|| filmToBeValidated.getDataPubblicazione() == null
 				|| filmToBeValidated.getRegista() == null
 				|| filmToBeValidated.getRegista().getId() == null 
-				|| filmToBeValidated.getRegista().getId() < 1) {
+				|| filmToBeValidated.getRegista().getId() < 1
+				|| filmToBeValidated.getId() == null) {
 			return false;
 		}
 		return true;
