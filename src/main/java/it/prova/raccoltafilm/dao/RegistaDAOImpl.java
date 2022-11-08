@@ -13,6 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import it.prova.raccoltafilm.model.Film;
 import it.prova.raccoltafilm.model.Regista;
+import it.prova.raccoltafilm.model.Utente;
 
 public class RegistaDAOImpl implements RegistaDAO {
 
@@ -99,6 +100,14 @@ public class RegistaDAOImpl implements RegistaDAO {
 
 		return typedQuery.getResultList();
 
+	}
+
+	@Override
+	public Optional<Regista> findEagerFilms(Long id) throws Exception {
+		TypedQuery<Regista> query = entityManager.createQuery(
+				"select r FROM Regista r left join fetch r.films where r.id = :idRegista ", Regista.class);
+		query.setParameter("idRegista", id);
+		return query.getResultStream().findFirst();
 	}
 
 }

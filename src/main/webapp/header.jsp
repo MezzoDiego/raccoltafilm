@@ -3,7 +3,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <!-- Bootstrap CSS -->
-<link href="assets/css/bootstrap.min.css" rel="stylesheet" >
+<link href="${pageContext.request.contextPath }/assets/css/bootstrap.min.css" rel="stylesheet" >
 
  <!-- Favicons -->
 <link rel="icon" href="./assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">

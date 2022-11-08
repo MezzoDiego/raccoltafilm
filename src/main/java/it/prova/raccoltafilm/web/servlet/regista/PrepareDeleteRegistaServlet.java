@@ -7,35 +7,51 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.math.NumberUtils;
+
+import it.prova.raccoltafilm.model.Film;
+import it.prova.raccoltafilm.model.Regista;
+import it.prova.raccoltafilm.service.MyServiceFactory;
+
 /**
  * Servlet implementation class PrepareDeleteRegistaServlet
  */
 @WebServlet("/PrepareDeleteRegistaServlet")
 public class PrepareDeleteRegistaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public PrepareDeleteRegistaServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String idRegistaParam = request.getParameter("idRegista");
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		if (!NumberUtils.isCreatable(idRegistaParam)) {
+			// qui ci andrebbe un messaggio nei file di log costruito ad hoc se fosse attivo
+			request.setAttribute("errorMessage", "Attenzione si è verificato un errore.");
+			request.getRequestDispatcher("home").forward(request, response);
+			return;
+		}
+
+		try {
+			Regista registaInstance = MyServiceFactory.getRegistaServiceInstance().caricaSingoloElemento(Long.parseLong(idRegistaParam));
+
+			if (registaInstance == null) {
+				request.setAttribute("errorMessage", "Elemento non trovato.");
+				request.getRequestDispatcher("ExecuteListRegistaServlet?operationResult=NOT_FOUND").forward(request,
+						response);
+				return;
+			}
+
+			request.setAttribute("delete_regista_attr", registaInstance);
+		} catch (Exception e) {
+			// qui ci andrebbe un messaggio nei file di log costruito ad hoc se fosse attivo
+			e.printStackTrace();
+			request.setAttribute("errorMessage", "Attenzione si è verificato un errore.");
+			request.getRequestDispatcher("home").forward(request, response);
+			return;
+		}
+
+		request.getRequestDispatcher("/regista/delete.jsp").forward(request, response);
+
 	}
 
 }

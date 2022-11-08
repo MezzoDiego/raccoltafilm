@@ -5,6 +5,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import it.prova.raccoltafilm.dao.RegistaDAO;
+import it.prova.raccoltafilm.exceptions.ElementNotFoundException;
+import it.prova.raccoltafilm.exceptions.RegistaConFilmAssociatiException;
 import it.prova.raccoltafilm.model.Regista;
 import it.prova.raccoltafilm.web.listener.LocalEntityManagerFactoryListener;
 
@@ -59,8 +61,22 @@ public class RegistaServiceImpl implements RegistaService {
 
 	@Override
 	public Regista caricaSingoloElementoConFilms(Long id) throws Exception {
-		//da implementare?
-		return null;
+		// questo è come una connection
+		EntityManager entityManager = LocalEntityManagerFactoryListener.getEntityManager();
+
+		try {
+			// uso l'injection per il dao
+			registaDAO.setEntityManager(entityManager);
+
+			// eseguo quello che realmente devo fare
+			return registaDAO.findEagerFilms(id).get();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			LocalEntityManagerFactoryListener.closeEntityManager(entityManager);
+		}
 	}
 
 	@Override
@@ -125,9 +141,16 @@ public class RegistaServiceImpl implements RegistaService {
 
 			// uso l'injection per il dao
 			registaDAO.setEntityManager(entityManager);
-
+			Regista registaToRemove = registaDAO.findOne(idRegista).orElse(null);
+			if (registaToRemove == null)
+				throw new ElementNotFoundException("Film con id: " + idRegista + " non trovato.");
+			
+			Regista registaEager = registaDAO.findEagerFilms(idRegista).orElse(null);
+			if (registaEager.getFilms().size() > 0)
+				throw new RegistaConFilmAssociatiException(
+						"Impossibile rimuovere regista in quanto ha film associati.");
 			// eseguo quello che realmente devo fare
-			registaDAO.delete(registaDAO.findOne(idRegista).orElse(null));
+			registaDAO.delete(registaToRemove);
 
 			entityManager.getTransaction().commit();
 		} catch (Exception e) {

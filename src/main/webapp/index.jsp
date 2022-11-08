@@ -5,7 +5,7 @@
 	 	<!-- Common imports in pages -->
 	 	<jsp:include page="./header.jsp" />
 		<!-- Custom styles per le features di bootstrap 'Columns with icons' -->
-	   <link href="./assets/css/features.css" rel="stylesheet">
+	   <link href="${pageContext.request.contextPath }/assets/css/features.css" rel="stylesheet">
 	   
 	   <title>Raccolta Film</title>
 	 </head>

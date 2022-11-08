@@ -38,8 +38,7 @@ public class UtilityForm {
 				|| StringUtils.isBlank(registaToBeValidated.getCognome())
 				|| StringUtils.isBlank(registaToBeValidated.getNickName()) 
 				|| registaToBeValidated.getSesso() == null
-				|| registaToBeValidated.getDataDiNascita() == null
-				|| registaToBeValidated.getId() == null) {
+				|| registaToBeValidated.getDataDiNascita() == null) {
 			return false;
 		}
 		return true;
