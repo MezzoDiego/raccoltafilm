@@ -1,3 +1,4 @@
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!doctype html>
 <html lang="it" class="h-100" >
@@ -56,14 +57,24 @@
 									<label for="cognome" class="form-label">Cognome <span class="text-danger">*</span></label>
 									<input type="text" name="cognome" id="cognome" class="form-control" placeholder="Inserire il cognome" value="${insert_utente_attr.cognome }" required>
 								</div>
-							
-								<fmt:formatDate pattern='yyyy-MM-dd' var="parsedDate" type='date' value='${insert_utente_attr.dateCreated}' />
-								<div class="col-md-3">
-									<label for="dateCreated" class="form-label">Data creazione <span class="text-danger">*</span></label>
-                        			<input class="form-control" id="dateCreated" type="date" placeholder="dd/MM/yy"
-                            			title="formato : gg/mm/aaaa"  name="dateCreated" required value="${parsedDate}" >
+								
+								<div class="col-md-6">
+									<label for="password" class="form-label">Password <span class="text-danger">*</span></label>
+									<input type="password" name="password" id="password" class="form-control" placeholder="Inserire password" value="" required>
 								</div>
 								
+								<div class="col-md-6">
+									<label for="confermapassword" class="form-label">Conferma password <span class="text-danger">*</span></label>
+									<input type="password" name="confermapassword" id="confermapassword" class="form-control" placeholder="conferma password" value="" required>
+								</div>
+							
+								
+								<div class="col-md-6">
+									<label for="ruoli" class="form-label">Seleziona ruoli:</label><br>
+										<c:forEach items="${ruoli_list_attribute }" var="ruoloItem">
+  									<input class="form-check-input" type="checkbox" id="ruoli" name="ruoli" value="${ruoloItem.id }"<c:if test="${ruoliChecked.contains(ruoloItem.id)}">checked="checked"</c:if>> ${ruoloItem.descrizione }<br>
+  										</c:forEach>
+								</div>
 								
 								
 								

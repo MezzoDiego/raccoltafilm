@@ -1,3 +1,4 @@
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!doctype html>
 <html lang="it" class="h-100" >
@@ -49,6 +50,13 @@
 					    	<dl class="row">
 							  <dt class="col-sm-3 text-right">Data creazione:</dt>
 							  <dd class="col-sm-9"><fmt:formatDate type = "date" value = "${show_utente_attr.dateCreated}" /></dd>
+					    	</dl>
+					    	
+					    	<dl class="row">
+							  <dt class="col-sm-3 text-right">Ruoli:</dt>
+							  <c:forEach items="${show_utente_attr.ruoli }" var="ruoloItem">
+							  	<dd class="col-sm-9">${ruoloItem}</dd>
+							  </c:forEach>
 					    	</dl>
 					    	
 					    <!-- end card body -->

@@ -31,7 +31,7 @@ public class ExecuteVisualizzaUtenteServlet extends HttpServlet {
 		}
 
 		try {
-			Utente utenteInstance = MyServiceFactory.getUtenteServiceInstance().caricaSingoloElemento(Long.parseLong(idUtenteParam));
+			Utente utenteInstance = MyServiceFactory.getUtenteServiceInstance().caricaSingoloElementoEager(Long.parseLong(idUtenteParam));
 
 			if (utenteInstance == null) {
 				request.setAttribute("errorMessage", "Elemento non trovato.");
