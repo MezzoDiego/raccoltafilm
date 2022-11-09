@@ -116,7 +116,7 @@ public class UtenteDAOImpl implements UtenteDAO {
 			paramaterMap.put("cognome", "%" + example.getCognome() + "%");
 		}
 		if (example.getDateCreated() != null) {
-			whereClauses.add(" u.dateCreated = :dateCreated ");
+			whereClauses.add(" u.dateCreated >= :dateCreated ");
 			paramaterMap.put("dateCreated",  example.getDateCreated());
 		}
 
