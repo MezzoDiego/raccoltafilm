@@ -41,7 +41,7 @@
 				        <h5>Lista dei risultati</h5> 
 				    </div>
 				    <div class='card-body'>
-				    
+				    <a class="btn btn-primary " href="${pageContext.request.contextPath }/admin/PrepareInsertUtenteServlet">Add New</a>
 				        <div class='table-responsive'>
 				            <table class='table table-striped ' >
 				                <thead>
@@ -50,6 +50,8 @@
 				                        <th>Nome</th>
 				                        <th>Cognome</th>
 				                        <th>Data creazione</th>
+				                        <th>Azioni</th>
+				                        
 				                    </tr>
 				                </thead>
 				                <tbody>
@@ -59,7 +61,9 @@
 											<td>${utenteItem.nome }</td>
 											<td>${utenteItem.cognome }</td>
 											<td><fmt:formatDate type = "date" value = "${utenteItem.dateCreated }" /></td>
-											
+											<td>
+												<a class="btn  btn-sm btn-outline-secondary" href="${pageContext.request.contextPath }/admin/ExecuteVisualizzaUtenteServlet?idUtente=${utenteItem.id }">Visualizza</a>
+											</td>
 										</tr>
 									</c:forEach>
 				                </tbody>
